@@ -74,8 +74,11 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(167, 243, 208, 0.3);
-            position: sticky;
+            /* แก้ไขเป็น fixed เพื่อให้ตรึงอยู่ด้านบนแน่นอน */
+            position: fixed;
+            width: 100%;
             top: 0;
+            left: 0;
             z-index: 50;
         }
 
@@ -167,7 +170,8 @@
         );
 
         const Hero = () => (
-            <div className="relative pt-12 pb-16 px-4 text-center z-10">
+            // เพิ่ม padding-top (pt-28) เพื่อชดเชยพื้นที่ของ Fixed Navbar ไม่ให้บังเนื้อหา
+            <div className="relative pt-28 pb-16 px-4 text-center z-10">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-nature-100 border border-nature-200 text-nature-700 text-l font-semibold mb-6 animate-[fadeUp_0.8s_ease-out_forwards]">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-nature-400 opacity-75"></span>
@@ -363,7 +367,7 @@
                 (doc.year && doc.year.toString().includes(searchTerm))
             );
 
-            // ฟังก์ชันจัดกลุ่มเอกสารตามลำดับศักดิ์ (แก้ไข Keyword ให้แม่นยำขึ้น)
+            // ฟังก์ชันจัดกลุ่มเอกสารตามลำดับศักดิ์ (แก้ไข Keyword ให้แม่นยำขึ้น และลบตัวเลขนำหน้า)
             const groupDocuments = (docs) => {
                 const groups = {
                     international: [],
@@ -403,7 +407,7 @@
                     }
                 });
 
-                // เรียงลำดับแบบไม่มีตัวเลขนำหน้า (ลบเลข 1. 2. 3. ออกจาก title)
+                // เรียงลำดับแบบไม่มีตัวเลขนำหน้า
                 return [
                     { title: "ตราสารระหว่างประเทศ (International Instruments)", data: groups.international, icon: "globe" },
                     { title: "ตราสารและกลไกระดับภูมิภาค (Regional Instruments)", data: groups.regional, icon: "map" },
